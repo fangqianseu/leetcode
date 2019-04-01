@@ -1,6 +1,6 @@
 package leetcode;
 
-import oj.structs.ListNode;
+import struct.ListNode;
 
 public class _21_MergeTwoSortedLists {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
@@ -8,11 +8,11 @@ public class _21_MergeTwoSortedLists {
         if (l2 == null) return l1;
 
         ListNode res;
-        if (l1.val <= l2.val){
-            l1.next = mergeTwoLists(l1.next,l2);
+        if (l1.val <= l2.val) {
+            l1.next = mergeTwoLists(l1.next, l2);
             res = l1;
-        }else {
-            l2.next = mergeTwoLists(l1,l2.next);
+        } else {
+            l2.next = mergeTwoLists(l1, l2.next);
             res = l2;
         }
 

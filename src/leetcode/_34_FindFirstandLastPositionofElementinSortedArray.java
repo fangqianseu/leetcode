@@ -14,20 +14,42 @@ public class _34_FindFirstandLastPositionofElementinSortedArray {
         res[1] = -1;
         if (nums == null || nums.length == 0) return res;
 
-        res[0] = halfFind(nums, 0, nums.length - 1, target - 0.5);
-        res[1] = halfFind(nums, 0, nums.length - 1, target + 0.5) - 1;
+        res[0] = leftfind(nums, 0, nums.length - 1, target);
+        res[1] = rightfind(nums, 0, nums.length - 1, target);
 
         return res;
     }
 
-    private int halfFind(int[] nums, int l, int r, double target) {
-        if (l > r) return -1;
-        if (l == r) return -1;
+    // 相等时 也让 mid 变化
+    private int leftfind(int[] nums, int l, int r, double target) {
+        int res = -1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if (nums[mid] >= target) {
+                r = mid - 1;
+            } else
+                l = mid + 1;
+            if (nums[mid] == target)
+                res = mid;
+        }
+        return res;
+    }
 
-        return 0;
+    private int rightfind(int[] nums, int l, int r, double target) {
+        int res = -1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if (nums[mid] <= target) {
+                l = mid + 1;
+            } else
+                r = mid - 1;
+            if (nums[mid] == target)
+                res = mid;
+        }
+        return res;
     }
 
     public static void main(String[] args) {
-        System.out.println("lajsdlasjd");
+        new _34_FindFirstandLastPositionofElementinSortedArray().searchRange(new int[]{5,7,7,8,8,10}, 8);
     }
 }

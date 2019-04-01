@@ -4,7 +4,7 @@ After removing the second node from the end, the linked list becomes 1->2->3->5.
  */
 package leetcode;
 
-import oj.structs.ListNode;
+import struct.ListNode;
 
 public class _19_RemoveNthNodeFromEndofList {
     public ListNode removeNthFromEnd(ListNode head, int n) {
@@ -12,13 +12,13 @@ public class _19_RemoveNthNodeFromEndofList {
         res.next = head;
 
         ListNode temp = res.next;
-        while (n-- > 0 ) {
+        while (n-- > 0) {
             if (temp == null) return head;
             temp = temp.next;
         }
 
         ListNode now = res;
-        while (temp != null){
+        while (temp != null) {
             temp = temp.next;
             now = now.next;
         }
