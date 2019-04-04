@@ -21,6 +21,22 @@ package leetcode;
 
 public class _48_RotateImage {
     public void rotate(int[][] matrix) {
+        int n = matrix.length;
 
+        // i 代表每次向内前进的长度
+        for (int i = 0; i < (n + 1) / 2; i++) {
+            for (int j = i; j < n - i - 1; j++) {
+                int t = matrix[i][j];
+                matrix[i][j] = matrix[n - j - 1][i];
+                matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1];
+                matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1];
+                matrix[j][n - i - 1] = t;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int[][] ints = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        new _48_RotateImage().rotate(ints);
     }
 }
