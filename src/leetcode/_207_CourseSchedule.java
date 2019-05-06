@@ -13,18 +13,30 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class _207_CourseSchedule {
+    /**
+     * 统计每个课被指向次数，初始被指向次数为0的肯定是安全的（不在环上）。
+     * 每被安全课程指向一次，被指次数减一，
+     * 如果被指次数减到0，说明该课程全部指向都来自安全课程，则它也是安全的。
+     * 依此进行队列循环。
+     * @param numCourses
+     * @param prerequisites
+     * @return
+     */
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         if (numCourses <= 0)
             return false;
+
         Queue<Integer> queue = new LinkedList<>();
         int[] inDegree = new int[numCourses];
         for (int i = 0; i < prerequisites.length; i++) {
             inDegree[prerequisites[i][1]]++;
         }
+
         for (int i = 0; i < inDegree.length; i++) {
             if (inDegree[i] == 0)
                 queue.offer(i);
         }
+
         while (!queue.isEmpty()) {
             int x = queue.poll();
             for (int i = 0; i < prerequisites.length; i++) {
@@ -35,6 +47,7 @@ public class _207_CourseSchedule {
                 }
             }
         }
+
         for (int i = 0; i < inDegree.length; i++) {
             if (inDegree[i] != 0)
                 return false;
