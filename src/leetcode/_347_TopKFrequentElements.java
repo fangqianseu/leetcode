@@ -15,6 +15,13 @@ package leetcode;
 import java.util.*;
 
 public class _347_TopKFrequentElements {
+    /**
+     * 最初的算法，2次hashmap
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
     public List<Integer> topKFrequent(int[] nums, int k) {
         HashMap<Integer, Integer> map = new HashMap<>();
         for (int item : nums) {
@@ -46,6 +53,66 @@ public class _347_TopKFrequentElements {
         for (int i = 0; k > 0; i++) {
             k -= keys.get(sorts.get(i)).size();
             res.addAll(keys.get(sorts.get(i)));
+        }
+        return res;
+    }
+
+    /**
+     * 利用 bitmap， 减少对 频率的排序
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public List<Integer> topKFrequent_array(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int item : nums) {
+            map.put(item, map.getOrDefault(item, 0) + 1);
+        }
+
+        List<Integer>[] bucket = new List[nums.length + 1];
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (bucket[entry.getValue()] == null)
+                bucket[entry.getValue()] = new ArrayList<>();
+            bucket[entry.getValue()].add(entry.getKey());
+        }
+
+        List<Integer> res = new ArrayList<>();
+        for (int i = bucket.length - 1; res.size() < k && i >= 0; i--) {
+            if (bucket[i] != null)
+                res.addAll(bucket[i]);
+        }
+
+        return res;
+    }
+
+    /**
+     * 利用 priorityQueue， 对 entry 排序
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public List<Integer> topKFrequent_priority(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int item : nums) {
+            map.put(item, map.getOrDefault(item, 0) + 1);
+        }
+
+        PriorityQueue<Map.Entry<Integer, Integer>> priorityQueue = new PriorityQueue<>(new Comparator<Map.Entry<Integer, Integer>>() {
+            @Override
+            public int compare(Map.Entry<Integer, Integer> o1, Map.Entry<Integer, Integer> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            priorityQueue.add(entry);
+        }
+
+        ArrayList<Integer> res = new ArrayList<>();
+        while (res.size() < k){
+            res.add(priorityQueue.poll().getKey());
         }
         return res;
     }
