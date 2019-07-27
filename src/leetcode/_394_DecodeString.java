@@ -26,6 +26,7 @@ public class _394_DecodeString {
     /**
      * 利用 stack，入栈时处理 数字
      * 遇到 ]，处理重复字符串，重新写入stack中
+     *
      * @param s
      * @return
      */

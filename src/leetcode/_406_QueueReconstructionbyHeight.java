@@ -17,8 +17,6 @@ Output:
 */
 package leetcode;
 
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
-
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
