@@ -6,13 +6,15 @@ import java.util.ArrayList;
 
 /**
  * by qianfang, at 2019-08-23, 00:30
+ *
+ * 倒序输出链表节点
  **/
 public class PrintListFromTailToHead {
     public ArrayList<Integer> res = new ArrayList<>();
 
     public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
         if (null == listNode) {
-            return null;
+            return res;
         }
         printListFromTailToHead(listNode.next);
         res.add(listNode.val);
