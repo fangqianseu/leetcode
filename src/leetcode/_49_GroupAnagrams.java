@@ -44,7 +44,7 @@ public class _49_GroupAnagrams {
                 sb.append(sign[j]);
             }
 
-            // 添加入 map
+            // 添加入 valueMap
             if (!map.containsKey(sb.toString())) {
                 map.put(sb.toString(), new ArrayList<>());
             }
