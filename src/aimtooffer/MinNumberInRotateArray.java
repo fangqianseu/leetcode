@@ -16,16 +16,23 @@ public class MinNumberInRotateArray {
         return helper(array, 0, array.length - 1);
     }
 
+    /**
+     * 左右指针，左指针在前半段 右指针在后半段
+     */
     private int helper(int[] array, int l, int r) {
-        if (l >= r) {
+        if (l + 1 >= r) {
             return Math.min(array[l], array[r]);
         }
 
         int mid = (l + r) / 2;
-        if (array[mid] > array[r]) {
-            return helper(array, mid + 1, r);
+        if (array[mid] >= array[r]) {
+            return helper(array, mid, r);
         } else {
             return helper(array, l, mid);
         }
+    }
+
+    public static void main(String[] args) {
+        new MinNumberInRotateArray().minNumberInRotateArray(new int[]{1, 1, 1});
     }
 }
