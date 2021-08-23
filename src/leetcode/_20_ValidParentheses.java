@@ -4,14 +4,21 @@ Given a string containing just the characters '(', ')', '{', '}', '[' and ']',
  */
 package leetcode;
 
+import java.util.LinkedList;
 import java.util.Stack;
 
+/*
+Given a string s containing just the characters '(', ')', '{', '}', '[' and ']',
+determine if the input string is valid.
+
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+
+ */
 public class _20_ValidParentheses {
     private Stack<Character> stack = new Stack<>();
-
-    public static void main(String[] args) {
-        new _20_ValidParentheses().isValid("{[]}");
-    }
 
     /*
     Leetcode 上 最好的一个解法
@@ -32,25 +39,29 @@ public class _20_ValidParentheses {
     }
 
     public boolean isValid(String s) {
-        if (s == null || s.length() == 0) return true;
-
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (march(c)) {
+        LinkedList<Character> stack = new LinkedList<>();
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push(c);
+                continue;
+            }
+            Character top = stack.peek();
+            if (top == null) {
+                return false;
+            }
+            if (c == ')' && stack.peek() == '(') {
+                stack.pop();
+            } else if (c == ']' && stack.peek() == '[') {
+                stack.pop();
+            } else if (c == '}' && stack.peek() == '{') {
                 stack.pop();
             } else {
-                stack.push(c);
+                return false;
             }
         }
-
         return stack.isEmpty();
     }
 
-    private boolean march(char c) {
-        if (stack.isEmpty()) return false;
-        if (c == ')' && stack.peek() == '(') return true;
-        else if (c == ']' && stack.peek() == '[') return true;
-        else if (c == '}' && stack.peek() == '{') return true;
-        else return false;
+    public static void main(String[] args) {
     }
 }
