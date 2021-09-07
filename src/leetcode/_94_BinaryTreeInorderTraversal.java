@@ -21,20 +21,25 @@ package leetcode;
 import struct.TreeNode;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
+/*
+Given the root of a binary tree,
+return the inorder traversal of its nodes' values.
+ */
 public class _94_BinaryTreeInorderTraversal {
 
     /**
      * 二叉树 中序遍历
+     *
      * @param root
      * @return
      */
     public List<Integer> inorderTraversal(TreeNode root) {
         ArrayList<Integer> res = new ArrayList<>();
 
-        LinkedList<TreeNode> stack = new LinkedList<>();
+        Stack<TreeNode> stack = new Stack<>();
         TreeNode temp = root;
 
         while (temp != null || !stack.isEmpty()) {
