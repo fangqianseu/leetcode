@@ -9,17 +9,28 @@ package leetcode;
 
 import struct.TreeNode;
 
+/*
+Given the root of a binary tree, check whether it is a mirror of itself
+(i.e., symmetric around its center).
+ */
 public class _101_SymmetricTree {
     public boolean isSymmetric(TreeNode root) {
-        if (root == null) return true;
-        return isSymmetricHelper(root.left, root.right);
+        if (null == root) {
+            return true;
+        }
+        return help(root.left, root.right);
     }
 
-    private boolean isSymmetricHelper(TreeNode left, TreeNode right) {
-        if (left == null && right == null)
+    public boolean help(TreeNode l, TreeNode r) {
+        if (null == l && null == r) {
             return true;
-        if (left == null || right == null || left.val != right.val)
+        }
+        if (null == l || null == r) {
             return false;
-        return isSymmetricHelper(left.left, right.right) && isSymmetricHelper(left.right, right.left);
+        }
+        if (r.val != l.val) {
+            return false;
+        }
+        return help(l.left, r.right) && help(l.right, r.left);
     }
 }
