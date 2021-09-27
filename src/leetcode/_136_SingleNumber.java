@@ -13,19 +13,26 @@ Output: 1
 */
 package leetcode;
 
+/*
+Given a non-empty array of integers nums, every element appears twice except for one.
+ Find that single one.
+
+You must implement a solution with a linear runtime complexity and use only constant extra space.
+ */
 public class _136_SingleNumber {
-    /**
-     * 利用 异或 运算
-     * 扩展： 找出2个 只出现一次的数字(剑指offer)
-     * @param nums
-     * @return
+
+    /*
+    使用 异或  ^
+    按位运算 相同为 0 相异为1
      */
     public int singleNumber(int[] nums) {
-        int res = 0;
-
-        for (int i = 0; i < nums.length; i++)
-            res ^= nums[i];
-
+        int res = nums[0];
+        if (nums.length < 2) {
+            return res;
+        }
+        for (int i = 1; i < nums.length; i++) {
+            res = res ^ nums[i];
+        }
         return res;
     }
 }
