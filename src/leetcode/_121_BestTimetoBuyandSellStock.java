@@ -16,6 +16,16 @@ Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-
 */
 package leetcode;
 
+/*
+You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+You want to maximize your profit by choosing a single day to buy one stock
+and choosing a different day in the future to sell that stock.
+
+Return the maximum profit you can achieve from this transaction.
+If you cannot achieve any profit, return 0.
+
+ */
 public class _121_BestTimetoBuyandSellStock {
     /**
      * 标准dp， dp[i] 为0~i最小数
@@ -24,37 +34,19 @@ public class _121_BestTimetoBuyandSellStock {
      * @return
      */
     public int maxProfit(int[] prices) {
-        int res = 0;
-        if (prices == null || prices.length == 0)
-            return res;
-
-        int[] dp = new int[prices.length];
-        dp[0] = prices[0];
-        for (int i = 1; i < prices.length; i++) {
-            dp[i] = Math.min(dp[i - 1], prices[i]);
-            res = Math.max(res, prices[i] - dp[i]);
+        int[] min = new int[prices.length];
+        if (prices.length < 2) {
+            return 0;
         }
-
-        return res;
-    }
-
-    /**
-     * 只使用dp[i-1] 故不用保留全部dp数组
-     *
-     * @param prices
-     * @return
-     */
-    public int maxProfit2(int[] prices) {
         int res = 0;
-        if (prices == null || prices.length == 0)
-            return res;
-
-        int min = prices[0];
+        // min 数组 为第 i 天的时候，之前买入的最低价格的
+        min[0] = prices[0];
         for (int i = 1; i < prices.length; i++) {
-            min = Math.min(min, prices[i]);
-            res = Math.max(res, prices[i] - min);
+            // 当天可以达到的最低价
+            min[i] = Math.min(min[i - 1], prices[i]);
+            // 当天卖出的最大收益
+            res = Math.max(res, prices[i] - min[i]);
         }
-
         return res;
     }
 }
