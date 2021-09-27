@@ -6,25 +6,33 @@ package leetcode;
 
 import struct.ListNode;
 
+/*
+Given head, the head of a linked list, determine if the linked list has a cycle in it.
+
+There is a cycle in a linked list if there is some node in the list
+that can be reached again by continuously following the next pointer.
+Internally, pos is used to denote the index of the node that tail's next pointer is connected to.
+ Note that pos is not passed as a parameter.
+
+Return true if there is a cycle in the linked list. Otherwise, return false.
+ */
 public class _141_LinkedListCycle {
-    /**
-     * 快慢指针法
-     * @param head
-     * @return
+
+    /*
+    快慢指针法
      */
     public boolean hasCycle(ListNode head) {
-        ListNode slow = head;
         ListNode fast = head;
+        ListNode slow = head;
 
-        // fast 必在 slow 之前 故只用判断 fast 不为空即可
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-
-            if (slow == fast)
+        while (null != fast && null != fast.next &&
+                null != slow && null != slow.next) {
+            fast = fast.next;
+            slow = slow.next.next;
+            if (fast == slow) {
                 return true;
+            }
         }
-
         return false;
     }
 }
