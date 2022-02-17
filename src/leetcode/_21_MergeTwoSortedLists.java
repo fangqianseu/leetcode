@@ -26,10 +26,10 @@ public class _21_MergeTwoSortedLists {
             return head.next;
         }
         if (list1 != null) {
-            temp.next = list2;
+            temp.next = list1;
         }
         if (list2 != null) {
-            temp.next = list1;
+            temp.next = list2;
         }
         return head.next;
     }
