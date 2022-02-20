@@ -12,39 +12,33 @@ You must write an algorithm with O(log n) runtime complexity.
  */
 public class _35_Search_Insert_Position {
     public int searchInsertBest(int[] nums, int target) {
-        int l = 0;
-        int r = nums.length - 1;
+        int i = 0;
+        int j = nums.length - 1;
 
-        while (l < r) {
-            int mid = (l + r) / 2;
-            if (nums[mid] < target) {
-                l = mid + 1;
-            } else if (nums[mid] > target) {
-                r = mid;
-            } else {
+        // 二分查找
+        while (i < j) {
+            int mid = (i + j) / 2;
+            if (nums[mid] == target) {
                 return mid;
+            } else if (nums[mid] < target) {
+                i = mid + 1;
+            } else {
+                j = mid - 1;
             }
         }
-        return nums[l] > target ? l : l + 1;
+
+        // j有可能小于0
+        if (j < 0){
+            j++;
+        }
+
+        return nums[j] >= target ? j : j + 1;
+
     }
 
-    /*
-     O(n)方法
-     */
-    public int searchInsert(int[] nums, int target) {
-        int res = 0;
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] >= target) {
-                break;
-            } else {
-                res++;
-            }
-        }
-        return res;
-    }
 
     public static void main(String[] args) {
         _35_Search_Insert_Position search_insert_position = new _35_Search_Insert_Position();
-        System.out.println(search_insert_position.searchInsertBest(new int[]{1}, 2));
+        System.out.println(search_insert_position.searchInsertBest(new int[]{1,3}, 1));
     }
 }
