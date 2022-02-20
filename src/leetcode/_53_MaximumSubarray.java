@@ -20,8 +20,11 @@ public class _53_MaximumSubarray {
      */
     public int maxSubArray(int[] nums) {
         int res = nums[0];
+
+        // temp 为 i位置的最大值
         int temp = res;
         for (int i = 1; i < nums.length; i++) {
+            // 当前位置的最大值 为 前一个位置的最大值加上当前值 和 只有当前值 2者的较大者
             temp = Math.max(nums[i], temp + nums[i]);
             res = Math.max(res, temp);
         }
