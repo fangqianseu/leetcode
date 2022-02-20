@@ -19,17 +19,17 @@ public class _53_MaximumSubarray {
     A subarray is a contiguous part of an array.
      */
     public int maxSubArray(int[] nums) {
-        int max = nums[0];
-        int temp = max;
+        int res = nums[0];
+        int temp = res;
         for (int i = 1; i < nums.length; i++) {
             temp = Math.max(nums[i], temp + nums[i]);
-            max = Math.max(temp, max);
+            res = Math.max(res, temp);
         }
-        return max;
+        return res;
     }
 
     public static void main(String[] args) {
         _53_MaximumSubarray maximumSubarray = new _53_MaximumSubarray();
-        System.out.println(maximumSubarray.maxSubArray(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}));
+        System.out.println(maximumSubarray.maxSubArray(new int[]{-2, 1}));
     }
 }
