@@ -30,26 +30,38 @@ return the inorder traversal of its nodes' values.
  */
 public class _94_BinaryTreeInorderTraversal {
 
+    private List<Integer> res = new ArrayList<>();
+
     /**
-     * 二叉树 中序遍历
-     *
-     * @param root
-     * @return
+     * 二叉树 中序遍历 递归
      */
     public List<Integer> inorderTraversal(TreeNode root) {
-        ArrayList<Integer> res = new ArrayList<>();
+        if (null == root) {
+            return res;
+        }
+        inorderTraversal(root.left);
+        res.add(root.val);
+        inorderTraversal(root.right);
+        return res;
+    }
 
+    /**
+     * 非递归
+     */
+    public List<Integer> inorderTraversal2(TreeNode root) {
+        if (null == root) {
+            return res;
+        }
         Stack<TreeNode> stack = new Stack<>();
-        TreeNode temp = root;
-
-        while (temp != null || !stack.isEmpty()) {
-            while (temp != null) {
-                stack.push(temp);
-                temp = temp.left;
+        while (root != null || !stack.isEmpty()) {
+            if (root != null) {
+                stack.push(root);
+                root = root.left;
+            } else {
+                TreeNode pop = stack.pop();
+                res.add(pop.val);
+                root = pop.right;
             }
-            temp = stack.pop();
-            res.add(temp.val);
-            temp = temp.right;
         }
         return res;
     }
