@@ -16,21 +16,24 @@ Given the root of a binary tree, check whether it is a mirror of itself
 public class _101_SymmetricTree {
     public boolean isSymmetric(TreeNode root) {
         if (null == root) {
-            return true;
+            return false;
         }
-        return help(root.left, root.right);
+        return isSymmetric(root.left, root.right);
     }
 
-    public boolean help(TreeNode l, TreeNode r) {
-        if (null == l && null == r) {
+    private boolean isSymmetric(TreeNode left, TreeNode right) {
+        if (null == left && null == right) {
             return true;
         }
-        if (null == l || null == r) {
+        if (null == left || null == right) {
             return false;
         }
-        if (r.val != l.val) {
+        if (left.val != right.val) {
             return false;
         }
-        return help(l.left, r.right) && help(l.right, r.left);
+
+        return isSymmetric(left.left, right.right) && isSymmetric(left.right, right.left);
     }
+
+
 }
