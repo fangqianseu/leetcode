@@ -1,7 +1,5 @@
 /*
-Date:04.09,2019 22:57
-
-You are climbing a stair case. It takes n steps to reach to the top.
+You are climbing a staircase. It takes n steps to reach to the top.
 
 Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
 
@@ -17,9 +15,6 @@ Each time you can either climb 1 or 2 steps. In how many distinct ways can you c
 public class _70_ClimbingStairs {
     /**
      * 递归法
-     *
-     * @param n
-     * @return
      */
     public int climbStairs(int n) {
         if (n <= 2) {
@@ -30,9 +25,6 @@ public class _70_ClimbingStairs {
 
     /**
      * dp:  dp[n] = dp[n-1] + dp[n-2]
-     *
-     * @param n
-     * @return
      */
     public int climbStairs2(int n) {
         if (n < 3) {
