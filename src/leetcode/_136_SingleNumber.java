@@ -26,13 +26,15 @@ public class _136_SingleNumber {
     按位运算 相同为 0 相异为1
      */
     public int singleNumber(int[] nums) {
-        int res = nums[0];
-        if (nums.length < 2) {
-            return res;
-        }
-        for (int i = 1; i < nums.length; i++) {
-            res = res ^ nums[i];
+        int res = 0;
+        for (int num : nums) {
+            res = res ^ num;
         }
         return res;
+    }
+
+    public static void main(String[] args) {
+        _136_SingleNumber singleNumber = new _136_SingleNumber();
+        System.out.println(singleNumber.singleNumber(new int[]{1, 1, 2,2,3}));
     }
 }
