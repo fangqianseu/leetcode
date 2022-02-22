@@ -28,25 +28,26 @@ If you cannot achieve any profit, return 0.
  */
 public class _121_BestTimetoBuyandSellStock {
     /**
-     * 标准dp， dp[i] 为0~i最小数
      *
-     * @param prices
-     * @return
      */
     public int maxProfit(int[] prices) {
-        int[] min = new int[prices.length];
         if (prices.length < 2) {
             return 0;
         }
+
+        // dp为截止到当天 的最低价
+        int[] dp = new int[prices.length];
+        dp[0] = prices[0];
         int res = 0;
-        // min 数组 为第 i 天的时候，之前买入的最低价格的
-        min[0] = prices[0];
         for (int i = 1; i < prices.length; i++) {
-            // 当天可以达到的最低价
-            min[i] = Math.min(min[i - 1], prices[i]);
-            // 当天卖出的最大收益
-            res = Math.max(res, prices[i] - min[i]);
+            dp[i] = Math.min(prices[i], dp[i - 1]);
+            res = Math.max(res, prices[i] - dp[i]);
         }
         return res;
+    }
+
+    public static void main(String[] args) {
+        _121_BestTimetoBuyandSellStock bestTimetoBuyandSellStock = new _121_BestTimetoBuyandSellStock();
+        System.out.println(bestTimetoBuyandSellStock.maxProfit(new int[]{7, 1, 5, 3, 6, 4}));
     }
 }
