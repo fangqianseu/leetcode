@@ -9,21 +9,24 @@ package leetcode;
 
 public class _169_MajorityElement {
     public int majorityElement(int[] nums) {
-        int main = nums[0];
+        int res = nums[0];
         int count = 1;
         for (int i = 1; i < nums.length; i++) {
-            if (nums[i] == main) {
+            if (res == nums[i]) {
                 count++;
-            } else if (--count < 0) {
-                count = 1;
-                main = nums[i];
+            } else {
+                count--;
+                if (count < 0) {
+                    res = nums[i];
+                    count = 1;
+                }
             }
         }
-
-        return main;
+        return res;
     }
 
     public static void main(String[] args) {
-        new _169_MajorityElement().majorityElement(new int[]{6, 5, 5});
+        _169_MajorityElement majorityElement = new _169_MajorityElement();
+        System.out.println(majorityElement.majorityElement(new int[]{6}));
     }
 }
