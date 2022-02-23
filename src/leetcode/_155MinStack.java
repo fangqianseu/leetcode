@@ -17,35 +17,34 @@ int top() gets the top element of the stack.
 int getMin() retrieves the minimum element in the stack.
  */
 public class _155MinStack {
-    class MinStack {
-        private Stack<Integer> normalStack = new Stack<>();
-        private Stack<Integer> minStack = new Stack<>();
+    private Stack<Integer> stack;
+    private Stack<Integer> minStack;
 
-        public MinStack() {
+    public _155MinStack() {
+        this.stack = new Stack<>();
+        this.minStack = new Stack<>();
+    }
 
+    public void push(int val) {
+        this.stack.push(val);
+        if (minStack.isEmpty()) {
+            minStack.push(val);
+        } else {
+            minStack.push(Math.min(val, minStack.peek()));
         }
+    }
 
-        public void push(int val) {
-            normalStack.push(val);
-            if (minStack.isEmpty()) {
-                minStack.push(val);
-            } else {
-                minStack.push(Math.min(val, minStack.peek()));
-            }
-        }
+    public void pop() {
+        this.minStack.pop();
+        this.stack.pop();
+    }
 
-        public void pop() {
-            minStack.pop();
-            normalStack.pop();
-        }
+    public int top() {
+        return this.stack.peek();
+    }
 
-        public int top() {
-            return normalStack.peek();
-        }
-
-        public int getMin() {
-            return minStack.peek();
-        }
+    public int getMin() {
+        return this.minStack.peek();
     }
 }
 
