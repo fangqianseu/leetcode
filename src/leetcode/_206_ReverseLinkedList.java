@@ -13,15 +13,14 @@ import struct.ListNode;
 
 public class _206_ReverseLinkedList {
     public ListNode reverseList(ListNode head) {
-        ListNode p = null, q = head;
+        ListNode pre = null;
 
-        while (q != null) {
-            ListNode temp = q.next;
-            q.next = p;
-
-            p = q;
-            q = temp;
+        while (head != null) {
+            ListNode temp = head.next;
+            head.next = pre;
+            pre = head;
+            head = temp;
         }
-        return p;
+        return pre;
     }
 }
