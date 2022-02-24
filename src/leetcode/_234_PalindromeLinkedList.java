@@ -19,20 +19,35 @@ package leetcode;
 import struct.ListNode;
 
 public class _234_PalindromeLinkedList {
+    public boolean isPalindrome2(ListNode head) {
+        StringBuilder sb = new StringBuilder();
+        while (null != head) {
+            sb.append(head.val);
+            head = head.next;
+        }
+        for (int i = 0, j = sb.length() - 1; i <= j; i++, j--) {
+            if (sb.charAt(i) != sb.charAt(j)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean isPalindrome(ListNode head) {
-        ListNode slow = head, fast = head;
+        //  无论个数为奇偶数   mid 为中间前一个
+        ListNode mid = head, fast = head;
         while (fast != null && fast.next != null) {
-            slow = slow.next;
+            mid = mid.next;
             fast = fast.next.next;
         }
 
-        slow = reserve(slow);
+        mid = reserve(mid);
         fast = head;
 
-        while (slow != null && fast != null){
-            if (slow.val != fast.val)
+        while (mid != null && fast != null) {
+            if (mid.val != fast.val)
                 return false;
-            slow = slow.next;
+            mid = mid.next;
             fast = fast.next;
         }
         return true;
