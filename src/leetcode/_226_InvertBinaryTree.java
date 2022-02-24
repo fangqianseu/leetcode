@@ -25,10 +25,13 @@ import struct.TreeNode;
 
 public class _226_InvertBinaryTree {
     public TreeNode invertTree(TreeNode root) {
-        if (root == null) return root;
-        TreeNode temp = root.left;
-        root.left = invertTree(root.right);
-        root.right = invertTree(temp);
+        if (null == root) {
+            return null;
+        }
+        TreeNode invertR = invertTree(root.right);
+        TreeNode invertL = invertTree(root.left);
+        root.right = invertL;
+        root.left = invertR;
         return root;
     }
 }
