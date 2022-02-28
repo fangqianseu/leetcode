@@ -8,23 +8,56 @@ import struct.TreeNode;
  * Given a binary tree, you need to compute the length of the diameter of the tree.
  * The diameter of a binary tree is the length of the longest path between any two nodes in a tree.
  * This path may or may not pass through the root.
+ * <p>
+ * 这种情况  不经过root节点
+ * t
+ * t  t
+ * t t
+ * t t
+ * t   t
+ * t     t
  **/
 public class _543_DiameterofBinaryTree {
 
+    // 递归解法   最长的距离 可能不经过root
     public int diameterOfBinaryTree(TreeNode root) {
-        if (root == null)
+        if (null == root) {
             return 0;
-
+        }
         int left = diameterOfBinaryTree(root.left);
         int right = diameterOfBinaryTree(root.right);
-        int fromMe = deepth(root.left) + deepth(root.right);
-        return Math.max(left, Math.max(right, fromMe));
+        int fromRoot = deepth(root.left) + deepth(root.right);
+        return Math.max(left, Math.max(right, fromRoot));
     }
 
     private int deepth(TreeNode node) {
-        if (null == node)
+        if (null == node) {
             return 0;
-        return Math.max(deepth(node.left), deepth(node.right)) + 1;
+        }
+        return Math.max(deepth(node.right), deepth(node.left)) + 1;
+    }
+
+    // ============================================================
+    // 便利法  在计算length的时候 就记录最长的距离
+    // 把每个节点都当做 root
+    int res = 0;
+
+    public int diameterOfBinaryTree2(TreeNode root) {
+        if (null == root) {
+            return 0;
+        }
+        deepth2(root);
+        return res;
+    }
+
+    private int deepth2(TreeNode node) {
+        if (null == node) {
+            return 0;
+        }
+        int right = deepth2(node.right);
+        int left = deepth2(node.left);
+        res = Math.max(res, right + left);
+        return Math.max(right, left) + 1;
     }
 
     public static void main(String[] args) {
