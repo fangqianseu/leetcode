@@ -15,15 +15,41 @@ Minimize the total number of operations.
 package leetcode;
 
 public class _283_MoveZeroes {
-    public void moveZeroes(int[] nums) {
+
+    /**
+     * 把非0的元素往前移，剩余的用0填
+     */
+    public void bestMove(int[] nums) {
         int index0 = 0;
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] != 0) {
-                nums[index0++] = nums[i];
+                nums[index0] = nums[i];
+                index0++;
             }
         }
         for (; index0 < nums.length; index0++) {
             nums[index0] = 0;
         }
+    }
+
+    public void moveZeroes(int[] nums) {
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (nums[i] == 0) {
+                for (int j = i; j < nums.length - 1; j++) {
+                    swap(nums, j, j + 1);
+                }
+            }
+        }
+    }
+
+    private void swap(int[] nums, int j, int i) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
+    public static void main(String[] args) {
+        _283_MoveZeroes moveZeroes = new _283_MoveZeroes();
+        moveZeroes.moveZeroes(new int[]{0});
     }
 }
