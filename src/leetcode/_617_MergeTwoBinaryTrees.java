@@ -13,19 +13,16 @@ import struct.TreeNode;
  * Otherwise, the NOT null node will be used as the node of new tree.
  **/
 public class _617_MergeTwoBinaryTrees {
-    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
-        if (t1 == null && t2 == null) {
+    public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
+        if (null == root1 && null == root2) {
             return null;
         }
-
-        if (t1 == null)
-            return t2;
-        if (t2 == null)
-            return t1;
-
-        TreeNode treeNode = new TreeNode(t1.val + t2.val);
-        treeNode.left = mergeTrees(t1.left, t2.left);
-        treeNode.right = mergeTrees(t1.right, t2.right);
-        return treeNode;
+        if (null == root1 || null == root2) {
+            return root1 == null ? root2 : root1;
+        }
+        TreeNode node = new TreeNode(root1.val + root2.val);
+        node.left = mergeTrees(root1.left, root2.left);
+        node.right = mergeTrees(root1.right, root2.right);
+        return node;
     }
 }
