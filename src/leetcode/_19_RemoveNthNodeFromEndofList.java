@@ -8,22 +8,29 @@ import struct.ListNode;
 
 public class _19_RemoveNthNodeFromEndofList {
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode res = new ListNode(-1);
+
+        // 兼容 n = head.length 的情况
+        ListNode res = new ListNode(1);
         res.next = head;
 
-        ListNode temp = res.next;
+        ListNode fast = res.next;
+        ListNode slow = res.next;
+
         while (n-- > 0) {
-            if (temp == null) return head;
-            temp = temp.next;
+            if (null == fast) {
+                break;
+            }
+            fast = fast.next;
         }
 
-        ListNode now = res;
-        while (temp != null) {
-            temp = temp.next;
-            now = now.next;
+        ListNode pre = res;
+        while (null != fast) {
+            pre = slow;
+            fast = fast.next;
+            slow = slow.next;
         }
-
-        now.next = now.next.next;
+        pre.next = slow.next;
         return res.next;
     }
+
 }
