@@ -17,21 +17,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class _22_GenerateParentheses {
-    private int n;
-    private ArrayList<String> res = new ArrayList<>();
-
     public List<String> generateParenthesis(int n) {
-        this.n = n;
-        generateParenthesisCore(0, 0, "");
+        List<String> res = new ArrayList<>();
+        helper(res, 0, 0, n, "");
         return res;
     }
 
-    private void generateParenthesisCore(int i, int j, String s) {
-        if (i == n && j == n) {
+    // l :（ 已经生成个数
+    // r： ) 已经生成个数
+    private void helper(List<String> res, int l, int r, int n, String s) {
+        if (l == n && r == n) {
             res.add(s);
             return;
         }
-        if (i < n) generateParenthesisCore(i + 1, j, s + "(");
-        if (i > j) generateParenthesisCore(i, j + 1, s + ")");
+        if (l < n) {
+            helper(res, l + 1, r, n, s + "(");
+        }
+        // 注意 一定是要 r 小于 l 而不是 n； 不然 () 不会闭合
+        if (r < l) {
+            helper(res, l, r + 1, n, s + ")");
+        }
+    }
+
+    public static void main(String[] args) {
+        _22_GenerateParentheses generateParentheses = new _22_GenerateParentheses();
+        System.out.println(generateParentheses.generateParenthesis(4));
     }
 }
