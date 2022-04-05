@@ -1,52 +1,55 @@
-/*
-Date: 04/1,2019, 21:33
-Given a set of candidate numbers (candidates) (without duplicates) and a target number (target),
-find all unique combinations in candidates where the candidate numbers sums to target.
-
-The same repeated number may be chosen from candidates unlimited number of times.
-*/
 package leetcode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Given an array of distinct integers candidates and a target integer target,
+ * return a list of all unique combinations of candidates where the chosen numbers sum to target.
+ * You may return the combinations in any order.
+ * <p>
+ * The same number may be chosen from candidates an unlimited number of times.
+ * Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+ * <p>
+ * It is guaranteed that the number of unique combinations that sum up to target is less than 150 combinations
+ * for the given input.
+ */
 public class _39_CombinationSum {
-    int[] candidates;
 
-    /*
-    1. 数组首先排序
-    2. 回溯法 在上次添加的index 之后寻找
-     */
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        ArrayList<List<Integer>> res = new ArrayList<>();
-        if (candidates == null || candidates.length == 0)
-            return res;
+        List<List<Integer>> res = new ArrayList<>();
         Arrays.sort(candidates);
-        this.candidates = candidates;
-
-        ArrayList<Integer> list = new ArrayList<>();
-        combinationSumCore(list, 0, target, res);
-
+        List<Integer> current = new ArrayList<>();
+        helper(candidates, 0, target, current, res);
         return res;
     }
 
-    private void combinationSumCore(ArrayList<Integer> list, int index, int target, ArrayList<List<Integer>> res) {
+    private void helper(int[] candidates, int index, int target, List<Integer> current, List<List<Integer>> res) {
+        if (index >= candidates.length) {
+            return;
+        }
         if (target == 0) {
-            res.add(new ArrayList<>(list));
+            // 不能直接传 current，这个对象是可变的
+            res.add(new ArrayList<>(current));
+            return;
+        }
+        if (target < 0) {
+            return;
         }
 
         for (int i = index; i < candidates.length; i++) {
-            if (i + 1 < candidates.length && candidates[i] == candidates[i + 1]) continue;
-            if (candidates[i] <= target) {
-                list.add(candidates[i]);
-                combinationSumCore(list, i, target - candidates[i], res);
-                list.remove(list.size() - 1);
+            while (i + 1 < candidates.length && candidates[i] == candidates[i + 1]) {
+                i++;
             }
+            current.add(candidates[i]);
+            helper(candidates, i, target - candidates[i], current, res);
+            current.remove(current.size() - 1);
         }
     }
 
     public static void main(String[] args) {
-        new _39_CombinationSum().combinationSum(new int[]{8, 7, 4, 3}, 11);
+        _39_CombinationSum combinationSum = new _39_CombinationSum();
+        combinationSum.combinationSum(new int[]{2, 3, 4}, 8);
     }
 }
