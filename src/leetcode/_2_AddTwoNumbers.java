@@ -35,38 +35,4 @@ public class _2_AddTwoNumbers {
 
         return head.next;
     }
-
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode head = new ListNode(0);
-        ListNode h = head;
-
-        int add = 0;
-        while (l1 != null || l2 != null) {
-            int temp = 0;
-            if (l1 != null && l2 != null) {
-                temp = l1.val + l2.val + add;
-                l1 = l1.next;
-                l2 = l2.next;
-            } else {
-                ListNode t = l1 == null ? l2 : l1;
-                temp = t.val + add;
-
-                if (null == l2) {
-                    l1 = l1.next;
-                } else {
-                    l2 = l2.next;
-                }
-            }
-
-            add = temp >= 10 ? 1 : 0;
-            h.next = new ListNode(temp % 10);
-            h = h.next;
-        }
-
-        if (add > 0) {
-            h.next = new ListNode(1);
-        }
-
-        return head.next;
-    }
 }
