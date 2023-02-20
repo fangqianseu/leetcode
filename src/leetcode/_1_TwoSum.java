@@ -4,6 +4,7 @@ package leetcode;
  * @author qianfang, at 2021/8/17, 下午11:31
  **/
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,20 +33,19 @@ import java.util.Map;
  */
 public class _1_TwoSum {
     public int[] twoSum(int[] nums, int target) {
-        int[] res = null;
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>(nums.length);
         for (int i = 0; i < nums.length; i++) {
-            int other = target - nums[i];
-            if (map.containsKey(other)) {
-                res = new int[]{map.get(nums[i]), i};
+            int t = target - nums[i];
+            if (map.containsKey(t)) {
+                return new int[]{map.get(t), i};
             } else {
                 map.put(nums[i], i);
             }
         }
-        return res;
+        return null;
     }
 
     public static void main(String[] args) {
-        System.out.println(new _1_TwoSum().twoSum(new int[]{2, 7, 11, 15}, 9));
+        System.out.println(Arrays.toString(new _1_TwoSum().twoSum(new int[]{2, 7, 11, 15}, 9)));
     }
 }
