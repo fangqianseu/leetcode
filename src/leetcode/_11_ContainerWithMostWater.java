@@ -16,12 +16,11 @@ public class _11_ContainerWithMostWater {
     public int maxArea(int[] height) {
         int res = 0;
         for (int i = 0, j = height.length - 1; i < j; ) {
-            int h = Math.min(height[i], height[j]);
-            res = Math.max(res, h * (j - i));
-            if (height[i] < height[j]) {
-                i++;
-            } else {
+            res = Math.max(res, Math.min(height[i], height[j]) * (j - i));
+            if (height[j] < height[i]) {
                 j--;
+            } else {
+                i++;
             }
         }
         return res;
@@ -29,6 +28,6 @@ public class _11_ContainerWithMostWater {
 
     public static void main(String[] args) {
         _11_ContainerWithMostWater c = new _11_ContainerWithMostWater();
-        System.out.println(c.maxArea(new int[]{1, 8, 6, 2, 5, 4, 8, 3, 7}));
+        System.out.println(c.maxArea(new int[]{2, 3, 4, 5, 18, 17, 6}));
     }
 }
