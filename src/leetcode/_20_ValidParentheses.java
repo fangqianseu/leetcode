@@ -21,6 +21,12 @@ Open brackets must be closed in the correct order.
 public class _20_ValidParentheses {
 
     public boolean isValidBest(String s) {
+
+        // 长度为奇数 直接返回false
+        if (s.length() % 2 != 0) {
+            return false;
+        }
+
         Map<Character, Character> charMap = new HashMap<>();
         charMap.put('(', ')');
         charMap.put('[', ']');
