@@ -12,7 +12,54 @@ package leetcode;
  * 有断点的有序队列 查找数字
  */
 public class _33_SearchingRotatedSortedArray {
+
     public int search(int[] nums, int target) {
+        if (null == nums || nums.length == 0) {
+            return -1;
+        }
+
+        return searchHelp(nums, 0, nums.length - 1, target);
+    }
+
+    // 先判断mid相对转折点位置，在分区域进行搜索
+    public int searchHelp(int[] nums, int l, int r, int target) {
+        if (r < l) {
+            return -1;
+        }
+        int mid = l + (r - l) / 2;
+        if (nums[mid] == target) {
+            return mid;
+        } else if (nums[mid] > nums[r]) {  // mid 左侧有序
+            if (target >= nums[l] && target <= nums[mid]) { // target在左侧有序范围内
+                return commonSearch(nums, 0, mid - 1, target);
+            } else {
+                return searchHelp(nums, mid + 1, r, target);
+            }
+        } else {  // mid 右侧有序
+            if (target >= nums[mid] && target <= nums[r]) { // target在右侧有序范围内
+                return commonSearch(nums, mid + 1, r, target);
+            } else {
+                return searchHelp(nums, l, mid - 1, target);
+            }
+        }
+
+    }
+
+    private int commonSearch(int[] nums, int l, int r, int target) {
+        if (r < l) {
+            return -1;
+        }
+        int mid = l + (r - l) / 2;
+        if (nums[mid] == target) {
+            return mid;
+        } else if (nums[mid] > target) {
+            return commonSearch(nums, l, mid - 1, target);
+        } else {
+            return commonSearch(nums, mid + 1, r, target);
+        }
+    }
+
+    public int search2(int[] nums, int target) {
         if (null == nums || nums.length == 0) {
             return -1;
         }
@@ -50,6 +97,6 @@ public class _33_SearchingRotatedSortedArray {
 
     public static void main(String[] args) {
         _33_SearchingRotatedSortedArray searchingRotatedSortedArray = new _33_SearchingRotatedSortedArray();
-        System.out.println(searchingRotatedSortedArray.search(new int[]{4, 5, 6, 7, 0, 1, 2}, 5));
+        System.out.println(searchingRotatedSortedArray.search(new int[]{1, 3}, 3));
     }
 }
