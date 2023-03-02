@@ -25,14 +25,15 @@ public class _34_FindFirstandLastPositionofElementinSortedArray {
         int temp = -1;
         while (l <= r) {
             int mid = l + (r - l) / 2;
-            if (nums[mid] <= target) {
+            if (nums[mid] < target) {
                 l = mid + 1;
 
-            } else {
+            } else if (nums[mid] > target) {
                 r = mid - 1;
-            }
-            if (nums[mid] == target) {
+            } else {
+                // 相等情况 找右边界   指针往右边移
                 temp = mid;
+                l = mid + 1;
             }
         }
         return temp;
@@ -43,14 +44,15 @@ public class _34_FindFirstandLastPositionofElementinSortedArray {
         int temp = -1;
         while (l <= r) {
             int mid = l + (r - l) / 2;
-            if (nums[mid] >= target) {
+            // 找左边界
+            if (nums[mid] > target) {
                 r = mid - 1;
-            } else {
+            } else if (nums[mid] < target) {
                 l = mid + 1;
-            }
-
-            if (nums[mid] == target) {
+            } else {
+                // 找左边界   指针往左边移
                 temp = mid;
+                r = mid - 1;
             }
         }
         return temp;
