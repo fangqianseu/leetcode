@@ -20,11 +20,9 @@ public class _53_MaximumSubarray {
      */
     public int maxSubArray(int[] nums) {
         int res = nums[0];
-
-        // temp 为 i位置的最大值
-        int temp = res;
+        int temp = nums[0];
         for (int i = 1; i < nums.length; i++) {
-            // 当前位置的最大值 为 前一个位置的最大值加上当前值 和 只有当前值 2者的较大者
+            // temp 为 当前值   和 之前积累的和加上当前值 中 最大的那一个
             temp = Math.max(nums[i], temp + nums[i]);
             res = Math.max(res, temp);
         }
@@ -33,6 +31,6 @@ public class _53_MaximumSubarray {
 
     public static void main(String[] args) {
         _53_MaximumSubarray maximumSubarray = new _53_MaximumSubarray();
-        System.out.println(maximumSubarray.maxSubArray(new int[]{-2, 1}));
+        System.out.println(maximumSubarray.maxSubArray(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}));
     }
 }
