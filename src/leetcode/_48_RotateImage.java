@@ -24,6 +24,7 @@ public class _48_RotateImage {
         int n = matrix.length;
 
         // i 代表每次向内前进的长度
+        // 可以抽象成一个 边长为n的正方形，其中4个点坐标分别为 （i,j） (n-1-j,i) (n-1-i,n-1-j) (j,n-1-i)
         for (int i = 0; i < (n + 1) / 2; i++) {
             for (int j = i; j < n - i - 1; j++) {
                 int t = matrix[i][j];
