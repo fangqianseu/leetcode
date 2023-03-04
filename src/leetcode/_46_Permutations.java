@@ -20,31 +20,29 @@ import java.util.List;
 public class _46_Permutations {
 
     public List<List<Integer>> permute(int[] nums) {
-        ArrayList<List<Integer>> res = new ArrayList<>();
-        if (nums == null || nums.length == 0)
-            return res;
-        permuteCore(nums, 0, res);
+        List<List<Integer>> res = new ArrayList<>();
+        permuteCore(nums, 0, new ArrayList<>(), new ArrayList<>(), res);
         return res;
     }
 
-    private void permuteCore(int[] nums, int i, ArrayList<List<Integer>> res) {
+    private void permuteCore(int[] nums, int i, List<Integer> used, List<Integer> current, List<List<Integer>> res) {
         if (i == nums.length) {
-            ArrayList<Integer> t = new ArrayList<>();
-            for (int item : nums) t.add(item);
-            res.add(t);
+            res.add(new ArrayList<>(current));
             return;
         }
-
-        for (int j = i; j < nums.length; j++) {
-            int t = nums[i];
-            nums[i] = nums[j];
-            nums[j] = t;
-
-            permuteCore(nums, i + 1, res);
-
-            t = nums[i];
-            nums[i] = nums[j];
-            nums[j] = t;
+        for (int num : nums) {
+            if (!used.contains(num)) {
+                used.add(num);
+                current.add(num);
+                permuteCore(nums, i + 1, used, current, res);
+                current.remove(current.size() - 1);
+                used.remove(used.size() - 1);
+            }
         }
+    }
+
+    public static void main(String[] args) {
+        new _46_Permutations().permute(new int[]{1, 2, 3});
+
     }
 }
