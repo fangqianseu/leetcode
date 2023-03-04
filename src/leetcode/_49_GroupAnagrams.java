@@ -40,8 +40,9 @@ public class _49_GroupAnagrams {
 
             // 将 位图 转化为 string
             StringBuilder sb = new StringBuilder();
-            for (int j = 0; j < sign.length; j++) {
-                sb.append(sign[j]);
+            for (int k : sign) {
+                // 这里每一位要添加 | 避免  1 10 和 11 0 区分不出来
+                sb.append(k).append("|");
             }
 
             // 添加入 valueMap
@@ -53,24 +54,32 @@ public class _49_GroupAnagrams {
         return new ArrayList<List<String>>(map.values());
     }
 
-    // 拆分单词 排序
-    public List<List<String>> groupAnagrams2(String[] strs) {
+    public List<List<String>> groupAnagramsSort(String[] strs) {
         HashMap<String, List<String>> map = new HashMap<>();
 
-        for (String s : strs) {
-            char[] chars = s.toCharArray();
+        for (int i = 0; i < strs.length; i++) {
+            String str = strs[i];
+
+            // 将字母排序 作为key 存储
+            char[] chars = str.toCharArray();
             Arrays.sort(chars);
 
-            String key = String.valueOf(chars);
-            if (!map.containsKey(key)) map.put(key, new ArrayList<String>());
-            map.get(key).add(s);
-        }
+            StringBuilder sb = new StringBuilder();
+            for (char c : chars) {
+                sb.append(c);
+            }
 
+            // 添加入 valueMap
+            if (!map.containsKey(sb.toString())) {
+                map.put(sb.toString(), new ArrayList<>());
+            }
+            map.get(sb.toString()).add(str);
+        }
         return new ArrayList<List<String>>(map.values());
     }
 
 
     public static void main(String[] args) {
-        new _49_GroupAnagrams().groupAnagrams(new String[]{"aazz", "zzaa"});
+        new _49_GroupAnagrams().groupAnagramsSort(new String[]{"bdddddddddd", "bbbbbbbbbbc"});
     }
 }
