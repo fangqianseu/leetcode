@@ -13,8 +13,7 @@ package leetcode;
 import struct.Interval;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Arrays;
 import java.util.List;
 
 public class _56_MergeIntervals {
@@ -25,40 +24,26 @@ public class _56_MergeIntervals {
      * @param intervals
      * @return
      */
-    public List<Interval> merge(List<Interval> intervals) {
-        ArrayList<Interval> res = new ArrayList<>();
-        if (intervals == null || intervals.size() == 0) return res;
+    public int[][] merge(int[][] intervals) {
 
-        Collections.sort(intervals, new Comparator<Interval>() {
-            @Override
-            public int compare(Interval o1, Interval o2) {
-                return Integer.compare(o1.start, o2.start);
-            }
-        });
+        if (intervals == null || intervals.length == 0) {
+            return null;
+        }
 
-        Interval temp = intervals.get(0);
-        for (Interval interval : intervals) {
-            // 此时区间重合
-            if (temp.end >= interval.start) {
-                // 更新 end 为  2 个区间 中较大的那个
-                temp.end = Math.max(interval.end, temp.end);
+        Arrays.sort(intervals, (o1, o2) -> o1[0] - o2[0]);
+
+        List<int[]> merged = new ArrayList<int[]>();
+        merged.add(intervals[0]);
+        for (int i = 0; i < intervals.length; i++) {
+            int start = intervals[i][0], end = intervals[i][1];
+            // 从 merged中 获取最新的一个 和当前比较
+            // 如果的当前 start 》 end ，则添加新的 区间； 否则就更新 merged中的end值为最大的那一个
+            if (start > merged.get(merged.size() - 1)[1]) {
+                merged.add(new int[]{start, end});
             } else {
-                res.add(temp);
-                temp = interval;
+                merged.get(merged.size() - 1)[1] = Math.max(merged.get(merged.size() - 1)[1], end);
             }
         }
-        res.add(temp);
-        return res;
-    }
-
-    public static void main(String[] args) {
-        List<Interval> list = new ArrayList<>();
-        Interval interval1 = new Interval(1, 3);
-        Interval interval2 = new Interval(2, 4);
-        Interval interval3 = new Interval(5, 6);
-        list.add(interval1);
-        list.add(interval2);
-        list.add(interval3);
-        new _56_MergeIntervals().merge(list);
+        return merged.toArray(new int[][]{});
     }
 }
