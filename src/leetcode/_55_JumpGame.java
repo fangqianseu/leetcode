@@ -27,23 +27,29 @@ public class _55_JumpGame {
      * @return
      */
     public boolean canJump(int[] nums) {
-        int[] maxJump = new int[nums.length];
-        maxJump[0] = nums[0];
-        if (maxJump[0] == 0) {
-            if (maxJump.length == 1) return true;
-            else return false;
+        if (nums.length == 0) {
+            return false;
+        }
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+
+        // 计算每一个位置到达的最大距离
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = Math.max(i + nums[i], dp[i - 1]);
         }
 
-        for (int i = 1; i < nums.length; i++) {
-            maxJump[i] = Math.max(maxJump[i - 1], nums[i] + i);
-            if (maxJump[i] <= i && i + 1 < nums.length) return false;
+        for (int i = 0; i < nums.length; i++) {
+            // 如果不是末尾 切可到达数不大于当前的indx 则返回false
+            if (i != nums.length - 1 && dp[i] <= i) {
+                return false;
+            }
         }
         return true;
     }
 
     /**
      * 参考 leetcode 中的最优解法
-     *
+     * <p>
      * 由于只保留 dp[i], 可以只保留当前的i 的 max reach
      *
      * @param nums
@@ -60,6 +66,6 @@ public class _55_JumpGame {
     }
 
     public static void main(String[] args) {
-        new _55_JumpGame().canJump2(new int[]{2, 3, 1, 1, 4});
+        new _55_JumpGame().canJump(new int[]{3, 2, 1, 0, 4});
     }
 }
