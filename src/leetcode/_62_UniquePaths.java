@@ -41,8 +41,10 @@ public class _62_UniquePaths {
         }
     }
 
-    /** 动态规划
+    /**
+     * 动态规划
      * dp[i][j] 为 (i,j) 上的路径可能数
+     * 第一行 第一列 要初始化为1
      * dp[i][j] = dp[i-1][j] + dp[i][j-1]
      *
      * @param m
@@ -50,22 +52,25 @@ public class _62_UniquePaths {
      * @return
      */
     public int uniquePaths2(int m, int n) {
-        if (m < n) uniquePaths2(n, m);
         int[][] dp = new int[m][n];
 
         // 将 最上行 和 最左行 初始化为1
-        for (int i = 0; i < dp[0].length; i++)
+        for (int i = 0; i < dp[0].length; i++) {
             dp[0][i] = 1;
-        for (int i = 0; i < dp.length; i++)
+        }
+        for (int i = 0; i < dp.length; i++) {
             dp[i][0] = 1;
+        }
 
-        // 计算每个位置的 所有路径数
-        for (int i = 1;i < dp.length;i++)
-            for (int j = 1; j < dp[0].length;j++)
-                dp[i][j] = dp[i-1][j] + dp[i][j-1];
+        // 逐行计算dp的值
+        for (int i = 1; i < dp.length; i++) {
+            for (int j = 1; j < dp[0].length; j++) {
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            }
+        }
 
         // 返回终点路径数
-        return dp[m-1][n-1];
+        return dp[m - 1][n - 1];
     }
 
     public static void main(String[] args) {
