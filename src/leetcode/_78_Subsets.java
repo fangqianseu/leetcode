@@ -22,7 +22,6 @@ Output:
 package leetcode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -32,7 +31,7 @@ import java.util.List;
  */
 public class _78_Subsets {
     /**
-     * 利用子集的定义： 对于其每个元素 要么添加 要么不添加
+     * 逐个枚举，空集的幂集只有空集，每增加一个元素，让之前幂集中的每个集合，追加这个元素，就是新增的子集
      *
      * @param nums
      * @return
@@ -74,6 +73,7 @@ public class _78_Subsets {
             list.remove(list.size() - 1);
         }
     }
+
 
     public static void main(String[] args) {
         new _78_Subsets().subsets2(new int[]{1, 2, 3});
