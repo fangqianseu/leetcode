@@ -18,22 +18,23 @@ public class _75_SortColors {
      * @param nums
      */
     public void sortColors(int[] nums) {
-        if (nums == null || nums.length == 0) return;
 
-        int i = 0, j = nums.length - 1;
-        // 将 0 全部调整到前列
-        while (i < j) {
-            while (i < j && nums[i] == 0) i++;
-            while (i < j && nums[j] != 0) j--;
-            swap(nums, i, j);
+        // 第一遍便利 处理左端
+        int left = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0 ) {
+                swap(nums, i, left);
+                left++;
+            }
         }
 
-        // 从 0 的下一位 调整
-        j = nums.length - 1;
-        while (i < j) {
-            while (i < j && nums[i] == 1) i++;
-            while (i < j && nums[j] != 1) j--;
-            swap(nums, i, j);
+        // 第二遍便利 处理右端
+        int right = nums.length - 1;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (nums[i] == 2) {
+                swap(nums, i, right);
+                right--;
+            }
         }
     }
 
@@ -45,7 +46,8 @@ public class _75_SortColors {
      * @param nums
      */
     public void sortColors2(int[] nums) {
-        if (nums == null || nums.length == 0) return;
+        if (nums == null || nums.length == 0)
+            return;
         int lptr = 0, nowptr = 0, rptr = nums.length - 1;
 
         while (nowptr <= rptr) {
@@ -69,6 +71,6 @@ public class _75_SortColors {
     }
 
     public static void main(String[] args) {
-        new _75_SortColors().sortColors2(new int[]{2, 0, 1});
+        new _75_SortColors().sortColors(new int[]{2, 0, 2, 1, 1, 0});
     }
 }
