@@ -35,7 +35,7 @@ public class _79_WordSearch {
     public boolean exist(char[][] board, String word) {
         boolean[][] signs = new boolean[board.length][board[0].length];
 
-        boolean res = false;
+
         for (int i = 0; i < board.length; i++)
             for (int j = 0; j < board[0].length; j++) {
                 if (existCore(board, signs, word, i, j, 0))
@@ -47,24 +47,29 @@ public class _79_WordSearch {
 
     private boolean existCore(char[][] board, boolean[][] signs, String word, int i, int j, int index) {
         // 找到条件
-        if (index == word.length()) return true;
-        // i j 越界
-        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length)
-            return false;
-        // 重复访问 或者 不相等
-        if (signs[i][j] || word.charAt(index) != board[i][j])
-            return false;
-
-        signs[i][j] = true;
-        if (existCore(board, signs, word, i - 1, j, index + 1) ||
-                existCore(board, signs, word, i + 1, j, index + 1) ||
-                existCore(board, signs, word, i, j - 1, index + 1) ||
-                existCore(board, signs, word, i, j + 1, index + 1))
+        if (index == word.length()) {
             return true;
-        else {
-            signs[i][j] = false;
+        }
+        // i j 越界
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length) {
             return false;
         }
+        // 重复访问 或者 不相等
+        if (signs[i][j] || word.charAt(index) != board[i][j]) {
+            return false;
+        }
+
+        // 此时证明该节点满足条件 设置 sign 为true
+        signs[i][j] = true;
+        // 检测 上下左右 4个点是否满足
+        if (existCore(board, signs, word, i - 1, j, index + 1) || existCore(board, signs, word, i + 1, j, index + 1) || existCore(board, signs, word, i, j - 1, index + 1) || existCore(board, signs, word, i, j + 1, index + 1)) {
+            // 满足条件 直接返回true
+            return true;
+        }
+        // 没有找到 还原sign的值 返回false
+        signs[i][j] = false;
+        return false;
+
     }
 
     public static void main(String[] args) {
