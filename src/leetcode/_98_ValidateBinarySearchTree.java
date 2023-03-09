@@ -29,11 +29,36 @@ public class _98_ValidateBinarySearchTree {
     }
 
     private boolean isValidBSTCore(TreeNode node, Integer min, Integer max) {
-        if (node == null)
+        if (node == null) {
             return true;
-        if ((max != null && node.val >= max) || (min != null && node.val <= min))
+        }
+        if ((max != null && node.val >= max) || (min != null && node.val <= min)) {
             return false;
+        }
         return isValidBSTCore(node.left, min, node.val) && isValidBSTCore(node.right, node.val, max);
+    }
+
+
+    /**
+     * 递归 判断中序节点是否为升序
+     */
+    long pre = Long.MIN_VALUE;
+
+    public boolean isValidBST3(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        // 访问左子树
+        if (!isValidBST3(root.left)) {
+            return false;
+        }
+        // 访问当前节点：如果当前节点小于等于中序遍历的前一个节点，说明不满足BST，返回 false；否则继续遍历。
+        if (root.val <= pre) {
+            return false;
+        }
+        pre = root.val;
+        // 访问右子树
+        return isValidBST3(root.right);
     }
 
     /**
