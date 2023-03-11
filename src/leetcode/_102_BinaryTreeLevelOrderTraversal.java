@@ -29,21 +29,27 @@ import java.util.List;
 public class _102_BinaryTreeLevelOrderTraversal {
     public List<List<Integer>> levelOrder(TreeNode root) {
         ArrayList<List<Integer>> res = new ArrayList<>();
-        if (root == null) return res;
+        if (root == null) {
+            return res;
+        }
 
         Deque<TreeNode> deque = new LinkedList<>();
         deque.offer(root);
 
         while (!deque.isEmpty()) {
             int size = deque.size();
-            ArrayList<Integer> list = new ArrayList<>();
+            ArrayList<Integer> temp = new ArrayList<>();
             while (size-- > 0) {
                 TreeNode node = deque.poll();
-                list.add(node.val);
-                if (node.left != null) deque.offer(node.left);
-                if (node.right != null) deque.offer(node.right);
+                temp.add(node.val);
+                if (node.left != null) {
+                    deque.offer(node.left);
+                }
+                if (node.right != null) {
+                    deque.offer(node.right);
+                }
             }
-            res.add(list);
+            res.add(temp);
         }
 
         return res;
