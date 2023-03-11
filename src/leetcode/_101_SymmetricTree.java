@@ -22,9 +22,11 @@ public class _101_SymmetricTree {
     }
 
     private boolean isSymmetric(TreeNode left, TreeNode right) {
+        // 都为空场景
         if (null == left && null == right) {
             return true;
         }
+        // 其中有一个不为空场景
         if (null == left || null == right) {
             return false;
         }
