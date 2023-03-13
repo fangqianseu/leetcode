@@ -33,19 +33,20 @@ public class _105_ConstrucBinaryTreefromPreorderandInorderTraversal {
      * @return
      */
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        if (preorder == null || preorder.length == 0)
+        if (preorder == null || preorder.length == 0) {
             return null;
-        int rootval = preorder[0];
-        TreeNode treeNode = new TreeNode(rootval);
+        }
+        TreeNode treeNode = new TreeNode(inorder[0]);
         int index = 0;
-        while (inorder[index] != rootval)
+        while (inorder[index] != treeNode.val) {
             index++;
+        }
         treeNode.left = buildTree(Arrays.copyOfRange(preorder, 1, index + 1), Arrays.copyOfRange(inorder, 0, index));
         treeNode.right = buildTree(Arrays.copyOfRange(preorder, index + 1, preorder.length), Arrays.copyOfRange(inorder, index + 1, inorder.length));
         return treeNode;
     }
 
     public static void main(String[] args) {
-        new _105_ConstrucBinaryTreefromPreorderandInorderTraversal().buildTree(new int[]{1, 2}, new int[]{1, 2});
+        new _105_ConstrucBinaryTreefromPreorderandInorderTraversal().buildTree(new int[]{3,9,20,15,7}, new int[]{9,3,15,20,7});
     }
 }
