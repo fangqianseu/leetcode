@@ -31,10 +31,12 @@ import struct.TreeNode;
 public class _114_FlattenBinaryTreetoLinkedList {
     /**
      * 将右子树挂在左子树后边
+     *
      * @param root
      */
     public void flatten(TreeNode root) {
-        if (root == null) return;
+        if (root == null)
+            return;
 
         TreeNode left = root.left;
         TreeNode right = root.right;
@@ -46,8 +48,33 @@ public class _114_FlattenBinaryTreetoLinkedList {
 
         root.right = left;
         TreeNode cur = root;
-        while (cur.right != null) cur = cur.right;
+        while (cur.right != null)
+            cur = cur.right;
         cur.right = right;
+    }
+
+    /**
+     * 具体做法是，对于当前节点，如果其左子节点不为空，则在其左子树中找到最右边的节点，作为前驱节点，
+     * 将当前节点的右子节点赋给前驱节点的右子节点，然后将当前节点的左子节点赋给当前节点的右子节点，
+     * 并将当前节点的左子节点设为空。
+     * 对当前节点处理结束后，继续处理链表中的下一个节点，直到所有节点都处理结束。
+     *
+     * @param root
+     */
+    public void flatten2(TreeNode root) {
+        TreeNode curr = root;
+        while (curr != null) {
+            if (curr.left != null) {
+                TreeNode predecessor = curr.left;
+                while (predecessor.right != null) {
+                    predecessor = predecessor.right;
+                }
+                predecessor.right = curr.right;
+                curr.right = curr.left;
+                curr.left = null;
+            }
+            curr = curr.right;
+        }
     }
 
     public static void main(String[] args) {
