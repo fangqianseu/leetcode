@@ -31,10 +31,6 @@ public class _121_BestTimetoBuyandSellStock {
      *
      */
     public int maxProfit(int[] prices) {
-        if (prices.length < 2) {
-            return 0;
-        }
-
         // dp为截止到当天 的最低价
         int[] dp = new int[prices.length];
         dp[0] = prices[0];
