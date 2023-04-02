@@ -22,19 +22,20 @@ import java.util.List;
 public class _139_WordBreak {
     /**
      * dp[i] 为 第i之前的 字符串 能否被字典切割
+     *
      * @param s
      * @param wordDict
      * @return
      */
     public boolean wordBreak(String s, List<String> wordDict) {
         boolean[] dp = new boolean[s.length() + 1];
-        // 匹配 从 0 开始的字符串
         dp[0] = true;
 
-        for (int i = 1; i <= s.length(); i++) {
-            for (int j = 0; j < i; j++) {
-                if (dp[j] && wordDict.contains(s.substring(j, i))) {
-                    dp[i] = true;
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = 0; j <= i; j++) {
+                String sub = s.substring(j, i+1);
+                if (dp[j] && wordDict.contains(sub)) {
+                    dp[i + 1] = true;
                     break;
                 }
             }
@@ -44,7 +45,7 @@ public class _139_WordBreak {
 
 
     public static void main(String[] args) {
-        ArrayList<String> list = new ArrayList<>(Arrays.asList("a"));
-        new _139_WordBreak().wordBreak("b", list);
+        ArrayList<String> list = new ArrayList<>(Arrays.asList("leet","code"));
+        new _139_WordBreak().wordBreak("leetcode", list);
     }
 }
