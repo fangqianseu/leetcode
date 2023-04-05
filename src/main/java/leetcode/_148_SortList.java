@@ -43,16 +43,8 @@ public class _148_SortList {
     private ListNode merge(ListNode l, ListNode r) {
         ListNode head = new ListNode();
         ListNode temp = head;
-        while (null != l || null != r) {
-            if (null != l && null != r) {
-                if (l.val <= r.val) {
-                    temp.next = l;
-                    l = l.next;
-                } else {
-                    temp.next = r;
-                    r = r.next;
-                }
-            } else if (l != null) {
+        while (null != l && null != r) {
+            if (l.val <= r.val) {
                 temp.next = l;
                 l = l.next;
             } else {
@@ -60,6 +52,14 @@ public class _148_SortList {
                 r = r.next;
             }
             temp = temp.next;
+        }
+
+        // 执行到这里 l r 必有一个走完  谁还有剩余 则 temp.next直接赋值
+        if (l != null) {
+            temp.next = l;
+        }
+        if (r != null) {
+            temp.next = r;
         }
         return head.next;
     }
