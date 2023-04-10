@@ -28,6 +28,21 @@ public class _160_IntersectionOfTwoLinkedLists {
         return null;
     }
 
+    /**
+     *
+     * @param headA
+     * @param headB
+     * @return
+     */
+    public ListNode getIntersectionNodeBest(ListNode headA, ListNode headB) {
+        ListNode A = headA, B = headB;
+        while (A != B) {
+            A = A != null ? A.next : headB;
+            B = B != null ? B.next : headA;
+        }
+        return A;
+    }
+
     private ListNode goHead(ListNode node, int between) {
         while (between > 0) {
             node = node.next;
