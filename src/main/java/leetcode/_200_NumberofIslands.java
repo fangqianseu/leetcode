@@ -7,33 +7,49 @@ You may assume all four edges of the grid are all surrounded by water.
 package leetcode;
 
 public class _200_NumberofIslands {
-    int res = 0;
-    boolean[][] sign;
-
     public int numIslands(char[][] grid) {
-        if (grid == null || grid.length == 0 || grid[0].length == 0)
-            return 0;
-
-        sign = new boolean[grid.length][grid[0].length];
-        for (int i = 0; i < grid.length; i++)
+        boolean[][] sign = new boolean[grid.length][grid[0].length];
+        int res = 0;
+        for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                if (!sign[i][j] && grid[i][j] == '1') {
+                if (check(grid, sign, i, j)) {
                     res++;
-                    help(i, j, grid);
                 }
             }
-
+        }
         return res;
     }
 
-    private void help(int i, int j, char[][] grid) {
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || sign[i][j] || grid[i][j] == '0')
+    private boolean check(char[][] grid, boolean[][] sign, int i, int j) {
+        boolean res = false;
+        if (!sign[i][j] && grid[i][j] == '1') {
+            mark(grid, sign, i, j);
+            res = true;
+        }
+        return res;
+    }
+
+    private void mark(char[][] grid, boolean[][] sign, int i, int j) {
+        // 出界情况
+        int jmax = grid[0].length;
+        int imax = grid.length;
+
+        // 注意 退出条件是 已经遍历过 和 是海洋
+        if (i < 0 || j < 0 || i >= imax || j >= jmax || sign[i][j] || grid[i][j] == '0') {
             return;
+        }
+
         sign[i][j] = true;
-        help(i - 1, j, grid);
-        help(i + 1, j, grid);
-        help(i, j - 1, grid);
-        help(i, j + 1, grid);
+
+        mark(grid, sign, i - 1, j);
+        mark(grid, sign, i + 1, j);
+        mark(grid, sign, i, j - 1);
+        mark(grid, sign, i, j + 1);
+    }
+
+    public static void main(String[] args) {
+        char[][] in = new char[][]{{'1', '1', '1'}, {'1', '1', '1'}, {'1', '1', '1'}};
+        System.out.println(new _200_NumberofIslands().numIslands(in));
     }
 
 }
