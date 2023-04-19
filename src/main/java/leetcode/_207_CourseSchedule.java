@@ -9,8 +9,9 @@ Given the total number of courses and a list of prerequisite pairs, is it possib
 */
 package leetcode;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 public class _207_CourseSchedule {
     /**
@@ -18,40 +19,49 @@ public class _207_CourseSchedule {
      * 每被安全课程指向一次，被指次数减一，
      * 如果被指次数减到0，说明该课程全部指向都来自安全课程，则它也是安全的。
      * 依此进行队列循环。
+     *
      * @param numCourses
      * @param prerequisites
      * @return
      */
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        if (numCourses <= 0)
-            return false;
 
-        Queue<Integer> queue = new LinkedList<>();
-        int[] inDegree = new int[numCourses];
-        for (int i = 0; i < prerequisites.length; i++) {
-            inDegree[prerequisites[i][1]]++;
+        // courseRelation存储后置节点的所有前置节点集合
+        List<List<Integer>> courseRelation = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) {
+            courseRelation.add(new ArrayList<>());
+        }
+        // indegree 为每个节点前置节点的个数 入度
+        int[] indegree = new int[numCourses];
+        for (int[] prerequisite : prerequisites) {
+            int p = prerequisite[0];
+            int q = prerequisite[1];
+            courseRelation.get(q).add(p);
+            indegree[p]++;
         }
 
-        for (int i = 0; i < inDegree.length; i++) {
-            if (inDegree[i] == 0)
-                queue.offer(i);
-        }
-
-        while (!queue.isEmpty()) {
-            int x = queue.poll();
-            for (int i = 0; i < prerequisites.length; i++) {
-                if (x == prerequisites[i][0]) {
-                    inDegree[prerequisites[i][1]]--;
-                    if (inDegree[prerequisites[i][1]] == 0)
-                        queue.offer(prerequisites[i][1]);
-                }
+        int res = 0;
+        // 首先把入度为0的节点 调处来
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < numCourses; i++) {
+            if (indegree[i] == 0) {
+                stack.add(i);
+                res++;
             }
         }
 
-        for (int i = 0; i < inDegree.length; i++) {
-            if (inDegree[i] != 0)
-                return false;
+        while (!stack.isEmpty()) {
+            int v = stack.pop();
+
+            // 把当前节点去掉后  检查他的所有后置节点是否入度为0； 是的话加入 stack 进行循环
+            List<Integer> t = courseRelation.get(v);
+            for (int i : t) {
+                if (--indegree[i] == 0) {
+                    res++;
+                    stack.push(i);
+                }
+            }
         }
-        return true;
+        return res == numCourses;
     }
 }
