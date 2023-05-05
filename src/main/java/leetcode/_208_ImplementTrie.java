@@ -7,80 +7,51 @@ All inputs are guaranteed to be non-empty strings.
 */
 package leetcode;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class _208_ImplementTrie {
-    private TireNode root;
 
-    /**
-     * Initialize your data structure here.
-     */
+    private _208_ImplementTrie[] nodes;
+    private boolean isEnd;
+
     public _208_ImplementTrie() {
-        root = new TireNode();
+        nodes = new _208_ImplementTrie[26];
+        isEnd = false;
     }
 
-    /**
-     * Inserts a word into the trie.
-     */
     public void insert(String word) {
-        TireNode now = root;
+        _208_ImplementTrie node = this;
         for (int i = 0; i < word.length(); i++) {
-            char c = word.charAt(i);
-            if (now.getSubNode(c) == null) {
-                now.addSubNode(c, new TireNode());
+            int index = word.charAt(i) - 'a';
+            if (node.nodes[index] == null) {
+                node.nodes[index] = new _208_ImplementTrie();
             }
-            now = now.getSubNode(c);
+            node = node.nodes[index];
         }
-        now.setEnd(true);
+        node.isEnd = true;
     }
 
-    /**
-     * Returns if the word is in the trie.
-     */
     public boolean search(String word) {
-        TireNode now = root;
-        for (int i = 0; i < word.length(); i++) {
-            char c = word.charAt(i);
-            if (now.getSubNode(c) == null)
-                return false;
-            now = now.getSubNode(c);
+        _208_ImplementTrie node = getSuffex(word);
+        if (node == null) {
+            return false;
         }
-        return now.isEnd();
+        return node.isEnd;
     }
 
-    /**
-     * Returns if there is any word in the trie that starts with the given prefix.
-     */
+    // 只有insert之后 对应的节点才会初始化
     public boolean startsWith(String prefix) {
-        TireNode now = root;
-        for (int i = 0; i < prefix.length(); i++) {
-            char c = prefix.charAt(i);
-            if (now.getSubNode(c) == null)
-                return false;
-            now = now.getSubNode(c);
-        }
-        return true;
+        _208_ImplementTrie node = getSuffex(prefix);
+        return node != null;
     }
 
-    class TireNode {
-        private boolean end = false;
-        private Map<Character, TireNode> subNodes = new HashMap<>();
-
-        private TireNode getSubNode(Character c) {
-            return subNodes.get(c);
+    private _208_ImplementTrie getSuffex(String prefix) {
+        _208_ImplementTrie node = this;
+        for (int i = 0; i < prefix.length(); i++) {
+            int index = prefix.charAt(i) - 'a';
+            if (node.nodes[index] == null) {
+                return null;
+            }
+            node = node.nodes[index];
         }
-
-        private void addSubNode(Character c, TireNode node) {
-            subNodes.put(c, node);
-        }
-
-        private boolean isEnd() {
-            return end;
-        }
-
-        private void setEnd(boolean end) {
-            this.end = end;
-        }
+        return node;
     }
 }
